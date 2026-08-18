@@ -1,0 +1,14 @@
+/bin/
+/dist/
+/data/
+/.cache/
+/config/services.windows.json
+/web/node_modules/
+/web/dist/
+/web/tsconfig.app.tsbuildinfo
+/web/tsconfig.node.tsbuildinfo
+/web/vite.config.js
+/web/vite.config.d.ts
+/internal/webui/dist/
+*.log
+password.txt

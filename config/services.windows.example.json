@@ -1,0 +1,52 @@
+{
+  "services": [
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "description": "Local models and inference API",
+      "command": "${LOCALAPPDATA}\\Programs\\Ollama\\ollama.exe",
+      "args": ["serve"],
+      "working_directory": "${LOCALAPPDATA}\\Programs\\Ollama",
+      "health_url": "http://127.0.0.1:11434/api/version",
+      "port": 11434,
+      "stop_timeout_seconds": 8
+    },
+    {
+      "id": "comfyui",
+      "name": "ComfyUI",
+      "description": "Local generative media workflows",
+      "command": "${USERPROFILE}\\ComfyUI\\python_embeded\\python.exe",
+      "args": ["-s", "ComfyUI\\main.py", "--windows-standalone-build", "--listen", "127.0.0.1", "--port", "8188"],
+      "working_directory": "${USERPROFILE}\\ComfyUI",
+      "health_url": "http://127.0.0.1:8188/system_stats",
+      "port": 8188,
+      "stop_timeout_seconds": 12
+    },
+    {
+      "id": "my-api",
+      "name": "My API",
+      "description": "Example Python development service",
+      "command": "${USERPROFILE}\\code\\my-api\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"],
+      "working_directory": "${USERPROFILE}\\code\\my-api",
+      "health_url": "http://127.0.0.1:8000/health",
+      "port": 8000,
+      "dependencies": ["ollama"],
+      "stop_timeout_seconds": 8
+    }
+  ],
+  "groups": [
+    {
+      "id": "local-ai",
+      "name": "Local AI",
+      "description": "Ollama",
+      "services": ["ollama"]
+    },
+    {
+      "id": "development",
+      "name": "Development stack",
+      "description": "Ollama + My API",
+      "services": ["ollama", "my-api"]
+    }
+  ]
+}
